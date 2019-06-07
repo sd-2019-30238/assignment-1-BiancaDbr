@@ -8,14 +8,13 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.mysql.jdbc.PreparedStatement;
 
 import java.lang.Class;
 
 public class DatabaseConnection {
 	private static final Logger LOGGER = Logger.getLogger(DatabaseConnection.class.getName());
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DBURL = "jdbc:mysql://localhost:3306/library2";
+	private static final String DBURL = "jdbc:mysql://localhost:3306/carrentals";
 	private static final String USER = "root";
 	private static final String PASS = "root";
 
@@ -40,25 +39,6 @@ public class DatabaseConnection {
 		}
 		return connection;
 	}
-	
-	public static void post() throws Exception{
-        final String var1 = "John";
-        final String var2 = "Miller";
-        final String var3 = "321231";
-        final String var4 = "Miller@yahoo.com";
-        final String var5 = "obs";
-        final String var6 = "staff";
-        final String var7 = "weekly";
-        try{
-            Connection con = getConnection();
-            PreparedStatement posted = (PreparedStatement) con.prepareStatement("INSERT INTO User (idUser, firstName, lastName, password, email, address, typeUser, paymentPlan) VALUES ('6786578', '"+var1+"', '"+var2+"', '"+var3+"', '"+var4+"', '"+var5+"', '"+var6+"', '"+var7+"')");
-           
-            posted.executeUpdate();
-        } catch(Exception e){System.out.println(e);}
-        finally {
-            System.out.println("Insert Completed.");
-        }
-    }
 
 	public static Connection getConnection() {
 		return singleInstance.createConnection();

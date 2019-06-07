@@ -1,16 +1,23 @@
 package presentation;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.util.concurrent.ThreadLocalRandom;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import bll.UserBLL;
+import model.User;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class RegisterGUI extends JFrame {
 
 	private JPanel contentPane;
@@ -57,33 +64,33 @@ public class RegisterGUI extends JFrame {
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
 		
-		JLabel lblFirstName = new JLabel("First Name");
-		lblFirstName.setBounds(26, 31, 132, 33);
-		contentPane.add(lblFirstName);
+		JLabel lbltitle = new JLabel("First Name");
+		lbltitle.setBounds(26, 31, 132, 33);
+		contentPane.add(lbltitle);
 		
-		JLabel lblLastName = new JLabel("Last Name");
-		lblLastName.setBounds(26, 80, 132, 33);
-		contentPane.add(lblLastName);
+		JLabel lblauthor = new JLabel("Last Name");
+		lblauthor.setBounds(26, 80, 132, 33);
+		contentPane.add(lblauthor);
 		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(26, 134, 115, 33);
-		contentPane.add(lblPassword);
+		JLabel lblreleaseDate = new JLabel("Password");
+		lblreleaseDate.setBounds(26, 134, 115, 33);
+		contentPane.add(lblreleaseDate);
 		
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(26, 185, 115, 33);
-		contentPane.add(lblEmail);
+		JLabel lblgenre = new JLabel("Email");
+		lblgenre.setBounds(26, 185, 115, 33);
+		contentPane.add(lblgenre);
 		
-		JLabel lblAddress = new JLabel("Address");
-		lblAddress.setBounds(26, 233, 115, 33);
-		contentPane.add(lblAddress);
+		JLabel lblavailability = new JLabel("Address");
+		lblavailability.setBounds(26, 233, 115, 33);
+		contentPane.add(lblavailability);
 		
 		JLabel lblPaymentPlan = new JLabel("Payment Plan");
 		lblPaymentPlan.setBounds(138, 284, 161, 33);
 		contentPane.add(lblPaymentPlan);
 		
-		JRadioButton rdbtnMontly = new JRadioButton("Monthly");
-		rdbtnMontly.setBounds(22, 331, 138, 41);
-		contentPane.add(rdbtnMontly);
+		JRadioButton rdbtnMonthly = new JRadioButton("Monthly");
+		rdbtnMonthly.setBounds(22, 331, 138, 41);
+		contentPane.add(rdbtnMonthly);
 		
 		JRadioButton rdbtnYearly = new JRadioButton("Yearly");
 		rdbtnYearly.setBounds(272, 331, 138, 41);
@@ -92,5 +99,28 @@ public class RegisterGUI extends JFrame {
 		JButton btnRegister = new JButton("Register");
 		btnRegister.setBounds(128, 398, 171, 62);
 		contentPane.add(btnRegister);
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			    String pp;
+			    if(rdbtnMonthly.isSelected()) {
+			    	pp = "monthly";
+			    } else {
+			    	pp = "weekly";
+			    }
+			    int id = ThreadLocalRandom.current().nextInt(1000, 100000 + 1);
+			    String fn = textField.getText();
+			    String ln = textField_1.getText();
+			    String pass = textField_2.getText();
+			    String email = textField_3.getText();
+			    String address = textField_4.getText();
+			    int strike = 0;
+			    User u = new User(id, fn, ln, pass, email, address, pp, strike);
+			    UserBLL.insertUser(u, email);
+			    MainGUI a = new MainGUI();
+				a.setVisible(true);
+				setVisible(false);
+				dispose();
+			}
+		});
 	}
 }
